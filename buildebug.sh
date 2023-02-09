@@ -1,17 +1,16 @@
-export BINUTILS_PATH=/home/nakixii/toolchain/android-glibc/bin
-export CLANG_PATH=/home/nakixii/toolchain/clang-r416183b/bin
+DIR=`readlink -f .`
+MAIN=`readlink -f ${DIR}/..`
+export CLANG_PATH=$MAIN/clang-r416183b/bin
 export PATH=${BINUTILS_PATH}:${CLANG_PATH}:${PATH}
 make -j8 CC='ccache clang' ARCH=arm64 LLVM=1 LLVM_IAS=1 O=out gki_defconfig
 #!/bin/bash
-
 # Resources
 THREAD="-j$(nproc --all)"
 
-export CLANG_PATH=/home/nakixii/toolchain/clang-r416183b/bin/
+export CLANG_PATH=$MAIN/clang-r416183b/bin/
 export PATH=${CLANG_PATH}:${PATH}
 export CLANG_TRIPLE=aarch64-linux-gnu-
-export CROSS_COMPILE=/home/nakixii/toolchain/proton-clang/bin/aarch64-linux-gnu- CC=clang CXX=clang++
-export CROSS_COMPILE_COMPAT=/home/nakixii/toolchain/arm-none-eabi-gcc/bin/arm-none-eabi-
+export CROSS_COMPILE=$MAIN/clang-r416183b/bin/aarch64-linux-gnu- CC=clang CXX=clang++
 
 DEFCONFIG="gki_defconfig"
 
@@ -20,14 +19,13 @@ KERNEL_DIR=`pwd`
 ZIMAGE_DIR="$KERNEL_DIR/out/arch/arm64/boot"
 
 # Vars
-export LOCALVERSION=-debug
 export ARCH=arm64
 export SUBARCH=$ARCH
-export KBUILD_BUILD_USER=nakixii
+export KBUILD_BUILD_USER=Rohail
 
 DATE_START=$(date +"%s")
 
-echo
+echo  "DEFCONFIG SET TO $DEFCONFIG"
 echo "-------------------"
 echo "Making Kernel:"
 echo "-------------------"
@@ -52,10 +50,8 @@ echo
 ls -a $ZIMAGE_DIR
 
 cd $KERNEL_DIR
-
-chown -R nakixii *
-chgrp -R nakixii *
-
+chown -R offender *
+chgrp -R offender *
 if grep -q "Error " kernel.log
 then
 	echo; echo
@@ -73,7 +69,7 @@ cd tmp
 7za a -mx9 tmp.zip *
 cd ..
 rm *.zip
-cp -fp tmp/tmp.zip kernel-nakimod-gki-$TIME.zip
+cp -fp tmp/tmp.zip RealKing_xiaomi_xaga-$TIME.zip
 rm -rf tmp
 echo $TIME
 fi
