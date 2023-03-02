@@ -50,17 +50,7 @@ echo
 ls -a $ZIMAGE_DIR
 
 cd $KERNEL_DIR
-chown -R offender *
-chgrp -R offender *
-if grep -q "Error " kernel.log
-then
-	echo; echo
-	grep -n "error:" kernel.log
-	grep -n "error," kernel.log
-	grep -n "not found" kernel.log
-	echo; echo
-	exit 0
-else
+
 TIME="$(date "+%Y%m%d-%H%M%S")"
 mkdir -p tmp
 cp -fp $ZIMAGE_DIR/Image.gz tmp
@@ -72,4 +62,3 @@ rm *.zip
 cp -fp tmp/tmp.zip RealKing_xiaomi_xaga-$TIME.zip
 rm -rf tmp
 echo $TIME
-fi
