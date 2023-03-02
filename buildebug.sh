@@ -50,8 +50,8 @@ echo
 ls -a $ZIMAGE_DIR
 
 cd $KERNEL_DIR
-chown -R offender *
-chgrp -R offender *
+chown -R pro *
+chgrp -R pro *
 if grep -q "Error " kernel.log
 then
 	echo; echo
