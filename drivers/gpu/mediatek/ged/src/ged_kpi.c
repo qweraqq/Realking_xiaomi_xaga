@@ -267,22 +267,11 @@ static unsigned int is_GED_KPI_enabled = 1;
 static unsigned int g_force_gpu_dvfs_fallback;
 static int g_fb_dvfs_threshold = 80;
 static int idle_fw_set_flag;
-<<<<<<< HEAD
-=======
 static int g_is_idle_fw_enable;
->>>>>>> 41fc35457eaa... [ALPS06388678] GPU:add ged fw_idle sysfs node
-
 module_param(g_fb_dvfs_threshold, int, 0644);
-
 // module_param(gx_dfps, uint, 0644);
 module_param(enable_gpu_boost, uint, 0644);
 module_param(is_GED_KPI_enabled, uint, 0644);
-<<<<<<< HEAD
-module_param(enable_cpu_boost, uint, 0644);
-=======
-
->>>>>>> 41fc35457eaa... [ALPS06388678] GPU:add ged fw_idle sysfs node
-
 /* for calculating remained time budgets of CPU and GPU:
  *		time budget: the buffering time that prevents fram drop
  */
