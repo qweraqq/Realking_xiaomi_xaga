@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/arm64 5.10.66 Kernel Configuration
+# Linux/arm64 5.10.110 Kernel Configuration
 #
 CONFIG_CC_VERSION_TEXT="Android (7284624, based on r416183b) clang version 12.0.5 (https://android.googlesource.com/toolchain/llvm-project c935d99d7cf2016289302412d708641d52d2f7ee)"
 CONFIG_GCC_VERSION=0
@@ -30,7 +30,7 @@ CONFIG_ZRAM_DEF_COMP="lz4"
 #
 CONFIG_INIT_ENV_ARG_LIMIT=32
 # CONFIG_COMPILE_TEST is not set
-CONFIG_LOCALVERSION="~RealKing//v2.0-Arrival"
+CONFIG_LOCALVERSION="Azrael//v1•OSS"
 CONFIG_LOCALVERSION_AUTO=y
 CONFIG_BUILD_SALT=""
 CONFIG_DEFAULT_INIT=""
