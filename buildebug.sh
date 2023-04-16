@@ -1,16 +1,12 @@
 DIR=`readlink -f .`
 MAIN=`readlink -f ${DIR}/..`
-export CLANG_PATH=$MAIN/clang-r416183b/bin
-export PATH=${BINUTILS_PATH}:${CLANG_PATH}:${PATH}
-make -j8 CC='ccache clang' ARCH=arm64 LLVM=1 LLVM_IAS=1 O=out gki_defconfig
+make -j4 CC='ccache clang' ARCH=arm64 LLVM=1 LLVM_IAS=1 O=out gki_defconfig
 #!/bin/bash
 # Resources
-THREAD="-j$(nproc --all)"
+THREAD="-j4"
 
-export CLANG_PATH=$MAIN/clang-r416183b/bin/
-export PATH=${CLANG_PATH}:${PATH}
 export CLANG_TRIPLE=aarch64-linux-gnu-
-export CROSS_COMPILE=$MAIN/clang-r416183b/bin/aarch64-linux-gnu- CC=clang CXX=clang++
+export CROSS_COMPILE=/opt/clang-r416183b/bin/aarch64-linux-gnu- CC=clang CXX=clang++
 
 DEFCONFIG="gki_defconfig"
 
