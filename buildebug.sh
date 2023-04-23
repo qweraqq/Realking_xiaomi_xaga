@@ -31,7 +31,8 @@ make CC="ccache clang" CXX="ccache clang++" LLVM=1 LLVM_IAS=1 O=out $DEFCONFIG
 make CC='ccache clang' CXX="ccache clang++" LLVM=1 LLVM_IAS=1 O=out $THREAD \
     CONFIG_MEDIATEK_CPUFREQ_DEBUG=m CONFIG_MTK_IPI=m CONFIG_MTK_TINYSYS_MCUPM_SUPPORT=m \
     CONFIG_MTK_MBOX=m CONFIG_RPMSG_MTK=m CONFIG_LTO_CLANG=y CONFIG_LTO_NONE=n \
-    CONFIG_LTO_CLANG_THIN=y CONFIG_LTO_CLANG_FULL=n 2>&1 | tee kernel.log
+    CONFIG_LTO_CLANG_THIN=y CONFIG_LTO_CLANG_FULL=n \
+    CONFIG_BPF=y CONFIG_DEBUG_INFO_BTF=y 2>&1 | tee kernel.log
 
 echo
 echo "-------------------"

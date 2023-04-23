@@ -1,10 +1,11 @@
 # How to build
 - Ubuntu 22.04 wsl
 - Dependencies
-
+- https://stackoverflow.com/questions/75705087/warning-a-load-segment-with-rwx-permissions-during-linux-kernel-build-leads-to-a
 ```bash
 apt-get update
-apt-get install -y bc bison build-essential ccache curl flex g++-multilib gcc-multilib git git-lfs gnupg gperf imagemagick lib32ncurses5-dev lib32readline-dev lib32z1-dev libelf-dev liblz4-tool libncurses5 libncurses5-dev libsdl1.2-dev libssl-dev libxml2 libxml2-utils lzop pngcrush rsync schedtool squashfs-tools xsltproc zip zlib1g-dev p7zip-full p7zip-rar libwxgtk3.0-gtk3-dev
+apt-get install -y bc bison build-essential ccache curl flex g++-multilib gcc-multilib git git-lfs gnupg gperf imagemagick lib32ncurses5-dev lib32readline-dev lib32z1-dev libelf-dev liblz4-tool libncurses5 libncurses5-dev libsdl1.2-dev libssl-dev libxml2 libxml2-utils lzop pngcrush rsync schedtool squashfs-tools xsltproc zip zlib1g-dev p7zip-full p7zip-rar libwxgtk3.0-gtk3-dev dwarves cmake
+
 
 git  clone  --depth 1 https://github.com/LineageOS/android_prebuilts_clang_kernel_linux-x86_clang-r416183b /opt/clang-r416183b
 
