@@ -23,7 +23,7 @@
 
 #ifdef arch_idle_time
 
-u64 get_idle_time(struct kernel_cpustat *kcs, int cpu)
+static u64 get_idle_time(struct kernel_cpustat *kcs, int cpu)
 {
 	u64 idle;
 
