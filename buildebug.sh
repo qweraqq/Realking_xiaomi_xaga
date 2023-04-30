@@ -29,13 +29,12 @@ echo "Making Kernel:"
 echo "-------------------"
 echo
 
-make -j4 CC='ccache clang' ARCH=arm64 LLVM=1 LLVM_IAS=1 CPATH="/usr/include:/usr/include/x86_64-linux-gnu" HOSTLDFLAGS="-L/usr/lib/x86_64-linux-gnu -L/usr/lib64 -fuse-ld=lld" CROSS_COMPILE_COMPAT=arm-linux-androidkernel- CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-androidkernel- O=out gki_defconfig
-make CC="ccache clang" CXX="ccache clang++" LLVM=1 LLVM_IAS=1 CPATH="/usr/include:/usr/include/x86_64-linux-gnu" HOSTLDFLAGS="-L/usr/lib/x86_64-linux-gnu -L/usr/lib64 -fuse-ld=lld" O=out $DEFCONFIG
-make CC='ccache clang' CXX="ccache clang++" LLVM=1 LLVM_IAS=1 CPATH="/usr/include:/usr/include/x86_64-linux-gnu" HOSTLDFLAGS="-L/usr/lib/x86_64-linux-gnu -L/usr/lib64 -fuse-ld=lld" O=out $THREAD \
+make CC='ccache clang' ARCH=arm64 LLVM=1 LLVM_IAS=1 O=out gki_defconfig
+make CC="ccache clang" CXX="ccache clang++" LLVM=1 LLVM_IAS=1 O=out $DEFCONFIG
+make CC='ccache clang' CXX="ccache clang++" LLVM=1 LLVM_IAS=1 O=out $THREAD \
     CONFIG_MEDIATEK_CPUFREQ_DEBUG=m CONFIG_MTK_IPI=m CONFIG_MTK_TINYSYS_MCUPM_SUPPORT=m \
     CONFIG_MTK_MBOX=m CONFIG_RPMSG_MTK=m CONFIG_LTO_CLANG=y CONFIG_LTO_NONE=n \
-    CONFIG_LTO_CLANG_THIN=y CONFIG_LTO_CLANG_FULL=n \
-    CONFIG_DEBUG_INFO_SWARF4=y CONFIG_BPF=y CONFIG_DEBUG_INFO_BTF=y 2>&1 | tee kernel.log
+    CONFIG_LTO_CLANG_THIN=y CONFIG_LTO_CLANG_FULL=n  2>&1 | tee kernel.log
 
 echo
 echo "-------------------"
