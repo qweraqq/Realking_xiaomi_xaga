@@ -34,6 +34,32 @@ chmod +x ./buildebug.sh
 ./buildebug.sh
 ```
 
+- pack to boot.img
+```bash
+# https://github.com/ssut/payload-dumper-go
+# https://github.com/cfig/Android_boot_image_editor
+
+# download and unzip rom
+chmod +x payload-dumper-go
+payload-dumper-go payload.bin # boot.img in extracted_YYYYMMDD_HHMMSS
+
+# pack boot.img
+apt-get git device-tree-compiler lz4 xz-utils zlib1g-dev openjdk-17-jdk gcc g++ python3 python-is-python3 p7zip-full android-sdk-libsparse-utils -y
+git clone https://github.com/cfig/Android_boot_image_editor.git
+cd Android_boot_image_editor
+cp extracted_YYYYMMDD_HHMMSS/boot.img ./
+./gradlew unpack
+
+cp Image.gz ./build/unzip_boot/kernel # Image.gz from AnyKernel3
+./gradlew pack
+
+# verify with Magiskboot on Windows
+# https://github.com/svoboda18/magiskboot
+# format should be same
+magiskboot.exe unpack -n boot.img
+magiskboot.exe unpack -n boot.img.signed
+
+```
 
 # How do I submit patches to Android Common Kernels
 
