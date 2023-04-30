@@ -219,7 +219,7 @@ gen_btf()
 		return 1
 	fi
 
-	pahole_ver=$(${PAHOLE} --version | sed -E 's/v([0-9]+)\.([0-9]+)/\1\2/')
+	pahole_ver=$($(dirname $0)/pahole-version.sh ${PAHOLE})
 	if [ "${pahole_ver}" -lt "116" ]; then
 		echo >&2 "BTF: ${1}: pahole version $(${PAHOLE} --version) is too old, need at least v1.16"
 		return 1
@@ -228,7 +228,7 @@ gen_btf()
 	vmlinux_link ${1}
 
 	info "BTF" ${2}
-	LLVM_OBJCOPY=${OBJCOPY} ${PAHOLE} -J --skip_encoding_btf_vars --skip_encoding_btf_enum64 ${1}
+	LLVM_OBJCOPY=${OBJCOPY} ${PAHOLE} -J ${PAHOLE_FLAGS} ${1}
 
 	# Create ${2} which contains just .BTF section but no symbols. Add
 	# SHF_ALLOC because .BTF will be part of the vmlinux image. --strip-all
