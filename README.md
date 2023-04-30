@@ -8,7 +8,8 @@
 
 ```bash
 apt-get update
-apt-get install -y bc bison build-essential ccache curl flex g++-multilib gcc-multilib git git-lfs gnupg gperf imagemagick lib32ncurses5-dev lib32readline-dev lib32z1-dev libelf-dev liblz4-tool libncurses5 libncurses5-dev libsdl1.2-dev libssl-dev libxml2 libxml2-utils lzop pngcrush rsync schedtool squashfs-tools xsltproc zip zlib1g-dev p7zip-full p7zip-rar libwxgtk3.0-gtk3-dev dwarves cmake libdwarf-dev libdw-dev pkgconf linux-tools-generic linux-tools-common bpfcc-tools libbpfcc libbpfcc-dev linux-generic libbpf-dev build-dep linux
+apt-get build-dep linux
+apt-get install -y bc bison build-essential ccache curl flex g++-multilib gcc-multilib git git-lfs gnupg gperf imagemagick lib32ncurses5-dev lib32readline-dev lib32z1-dev libelf-dev liblz4-tool libncurses5 libncurses5-dev libsdl1.2-dev libssl-dev libxml2 libxml2-utils lzop pngcrush rsync schedtool squashfs-tools xsltproc zip zlib1g-dev p7zip-full p7zip-rar libwxgtk3.0-gtk3-dev dwarves cmake libdwarf-dev libdw-dev pkgconf linux-tools-generic linux-tools-common bpfcc-tools libbpfcc libbpfcc-dev linux-generic libbpf-dev 
 
 git clone https://github.com/acmel/dwarves.git --branch=v1.24
 cd dwarves/
@@ -34,6 +35,32 @@ chmod +x ./buildebug.sh
 ./buildebug.sh
 ```
 
+- pack to boot.img
+```bash
+# https://github.com/ssut/payload-dumper-go
+# https://github.com/cfig/Android_boot_image_editor
+
+# download and unzip rom
+chmod +x payload-dumper-go
+payload-dumper-go payload.bin # boot.img in extracted_YYYYMMDD_HHMMSS
+
+# pack boot.img
+apt-get git device-tree-compiler lz4 xz-utils zlib1g-dev openjdk-17-jdk gcc g++ python3 python-is-python3 p7zip-full android-sdk-libsparse-utils -y
+git clone https://github.com/cfig/Android_boot_image_editor.git
+cd Android_boot_image_editor
+cp extracted_YYYYMMDD_HHMMSS/boot.img ./
+./gradlew unpack
+
+cp Image.gz ./build/unzip_boot/kernel # Image.gz from AnyKernel3
+./gradlew pack
+
+# verify with Magiskboot on Windows
+# https://github.com/svoboda18/magiskboot
+# format should be same
+magiskboot.exe unpack -n boot.img
+magiskboot.exe unpack -n boot.img.signed
+
+```
 
 # How do I submit patches to Android Common Kernels
 
