@@ -2070,6 +2070,12 @@ static int __set_cpus_allowed_ptr(struct task_struct *p,
 {
 	struct rq_flags rf;
 	struct rq *rq;
+	
+	/* Don't allow perf-critical threads to have non-perf affinities */
+	if ((p->flags & PF_PERF_CRITICAL) && new_mask != cpu_perf_mask &&
+		new_mask != cpu_perf_mask &&
+	  	new_mask != cpu_prime_mask)
+		return -EINVAL;
 
 	rq = task_rq_lock(p, &rf);
 	return __set_cpus_allowed_ptr_locked(p, new_mask, check, rq, &rf);
@@ -2536,7 +2542,7 @@ out:
 		 * leave kernel.
 		 */
 		if (p->mm && printk_ratelimit()) {
-			printk_deferred("process %d (%s) no longer affine to cpu%d\n",
+			pr_debug("process %d (%s) no longer affine to cpu%d\n",
 					task_pid_nr(p), p->comm, cpu);
 		}
 	}
