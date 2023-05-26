@@ -1,3 +1,67 @@
+# How to build
+- Ubuntu 22.04 wsl
+- Dependencies
+- https://wiki.ubuntu.com/Kernel/BuildYourOwnKernel
+- https://stackoverflow.com/questions/75705087/warning-a-load-segment-with-rwx-permissions-during-linux-kernel-build-leads-to-a
+- https://stackoverflow.com/questions/73210590/kernel-compilation-error-when-config-debug-info-btf-is-enabled
+- https://blog.seeflower.dev/archives/231/
+
+```bash
+apt-get update
+apt-get build-dep linux
+apt-get install -y bc bison build-essential ccache curl flex g++-multilib gcc-multilib git git-lfs gnupg gperf imagemagick lib32ncurses5-dev lib32readline-dev lib32z1-dev libelf-dev liblz4-tool libncurses5 libncurses5-dev libsdl1.2-dev libssl-dev libxml2 libxml2-utils lzop pngcrush rsync schedtool squashfs-tools xsltproc zip zlib1g-dev p7zip-full p7zip-rar libwxgtk3.0-gtk3-dev dwarves cmake libdwarf-dev libdw-dev pkgconf linux-tools-generic linux-tools-common bpfcc-tools libbpfcc libbpfcc-dev linux-generic libbpf-dev 
+
+git clone https://github.com/acmel/dwarves.git --branch=v1.24
+cd dwarves/
+git checkout v1.24
+mkdir build
+cd build
+cmake -D__LIB=lib ..
+px cmake -D__LIB=lib ..
+make install
+
+git  clone  --depth 1 https://github.com/LineageOS/android_prebuilts_clang_kernel_linux-x86_clang-r416183b /opt/clang-r416183b
+
+export PATH="/opt/clang-r416183b/bin:$PATH" # add to ~/.bashrc
+export LD_LIBRARY_PATH=/opt/clang-r416183b/lib64:/usr/local/lib:$LD_LIBRARY_PATH # add to ~/.bashrc
+```
+
+
+- Build
+```
+source ~/.bashrc
+git submodule update --init
+chmod +x ./buildebug.sh
+./buildebug.sh
+```
+
+- pack to boot.img
+```bash
+# https://github.com/ssut/payload-dumper-go
+# https://github.com/cfig/Android_boot_image_editor
+
+# download and unzip rom
+chmod +x payload-dumper-go
+payload-dumper-go payload.bin # boot.img in extracted_YYYYMMDD_HHMMSS
+
+# pack boot.img
+apt-get git device-tree-compiler lz4 xz-utils zlib1g-dev openjdk-17-jdk gcc g++ python3 python-is-python3 p7zip-full android-sdk-libsparse-utils -y
+git clone https://github.com/cfig/Android_boot_image_editor.git
+cd Android_boot_image_editor
+cp extracted_YYYYMMDD_HHMMSS/boot.img ./
+./gradlew unpack
+
+cp Image.gz ./build/unzip_boot/kernel # Image.gz from AnyKernel3
+./gradlew pack
+
+# verify with Magiskboot on Windows
+# https://github.com/svoboda18/magiskboot
+# format should be same
+magiskboot.exe unpack -n boot.img
+magiskboot.exe unpack -n boot.img.signed
+
+```
+
 # How do I submit patches to Android Common Kernels
 
 1. BEST: Make all of your changes to upstream Linux. If appropriate, backport to the stable releases.
