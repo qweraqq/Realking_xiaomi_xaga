@@ -62,6 +62,33 @@ magiskboot.exe unpack -n boot.img.signed
 
 ```
 
+```
+Using magiskboot
+Download latest Magisk from Release Page
+Rename Magisk-*.apk to Magisk-vesion.zip and unzip it.
+Push Magisk-v25.2/lib/arm64-v8a/libmagiskboot.so to your device by adb: adb push Magisk-v25.2/lib/arm64-v8a/libmagiskboot.so /data/local/tmp/magiskboot
+Push stock boot.img and Image in AnyKernel3 to your device.
+Enter adb shell and cd /data/local/tmp/ directory, then chmod +x magiskboot
+Enter adb shell and cd /data/local/tmp/ directory, execute ./magiskboot unpack boot.img to unpack boot.img, you will get a kernel file, this is your stock kernel.
+Replace kernel with Image: mv -f Image kernel
+Execute ./magiskboot repack boot.img to repack boot img, and you will get a new-boot.img file, flash this file to device by fastboot
+```
+
+
+- flash
+```
+adb reboot bootloader
+
+fastboot flash boot new-boot.img
+
+fastboot --disable-verity --disable-verification flash vbmeta vbmeta.img
+ 
+adb reboot
+
+# volumn down + power
+```
+
+
 # How do I submit patches to Android Common Kernels
 
 1. BEST: Make all of your changes to upstream Linux. If appropriate, backport to the stable releases.

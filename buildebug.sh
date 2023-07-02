@@ -22,7 +22,6 @@ export SUBARCH=$ARCH
 export KBUILD_BUILD_USER=Rohail
 
 DATE_START=$(date +"%s")
-curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -
 
 echo  "DEFCONFIG SET TO $DEFCONFIG"
 echo "-------------------"
@@ -62,7 +61,3 @@ rm *.zip
 cp -fp tmp/tmp.zip RealKing_xiaomi_xaga-$TIME.zip
 rm -rf tmp
 echo $TIME
-
-git checkout drivers/Makefile &>/dev/null
-rm -rf KernelSU
-rm -rf drivers/kernelsu
