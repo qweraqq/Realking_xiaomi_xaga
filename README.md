@@ -70,7 +70,7 @@ Push Magisk-v25.2/lib/arm64-v8a/libmagiskboot.so to your device by adb: adb push
 Push stock boot.img and Image in AnyKernel3 to your device.
 Enter adb shell and cd /data/local/tmp/ directory, then chmod +x magiskboot
 Enter adb shell and cd /data/local/tmp/ directory, execute ./magiskboot unpack boot.img to unpack boot.img, you will get a kernel file, this is your stock kernel.
-Replace kernel with Image: mv -f Image kernel
+Replace kernel with Image: mv -f Image.gz kernel
 Execute ./magiskboot repack boot.img to repack boot img, and you will get a new-boot.img file, flash this file to device by fastboot
 ```
 
