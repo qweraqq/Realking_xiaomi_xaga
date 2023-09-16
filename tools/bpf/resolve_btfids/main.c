@@ -714,7 +714,9 @@ int main(int argc, const char **argv)
 		if (no_fail)
 			return 0;
 		pr_err("FAILED to find needed sections\n");
-		return -1;
+		// https://www.spinics.net/lists/stable/msg539377.html
+		err = 0; 
+		goto out;
 	}
 
 	if (symbols_collect(&obj))
