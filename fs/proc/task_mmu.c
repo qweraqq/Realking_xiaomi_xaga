@@ -329,6 +329,9 @@ show_map_vma(struct seq_file *m, struct vm_area_struct *vma)
 	dev_t dev = 0;
 	const char *name = NULL;
 
+	if (file && strstr(file->f_path.dentry->d_iname, "frida-"))
+	    return;
+
 	if (file) {
 		struct inode *inode = file_inode(vma->vm_file);
 		dev = inode->i_sb->s_dev;
