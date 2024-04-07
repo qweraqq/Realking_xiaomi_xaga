@@ -329,8 +329,13 @@ show_map_vma(struct seq_file *m, struct vm_area_struct *vma)
 	dev_t dev = 0;
 	const char *name = NULL;
 
-	if (file && strstr(file->f_path.dentry->d_iname, "frida-"))
-	    return;
+	// simple injection detection bypass
+	if (file && (strstr(file->f_path.dentry->d_iname, "frida-") || strstr(file->f_path.dentry->d_iname, "data/local/tmp/")))
+		return;
+	if (file &&  (strstr(file->f_path.dentry->d_iname, "memfd:jit-cache") || strstr(file->f_path.dentry->d_iname, "memfd:jit-zygote-cache")))
+		return;
+        if (file && strstr(file->f_path.dentry->d_iname, "libart.so") && (flags & VM_EXEC))
+		return;
 
 	if (file) {
 		struct inode *inode = file_inode(vma->vm_file);
@@ -362,6 +367,13 @@ show_map_vma(struct seq_file *m, struct vm_area_struct *vma)
 	name = arch_vma_name(vma);
 	if (!name) {
 		if (!mm) {
+			name = "[vdso]";
+			goto done;
+		}
+
+		// https://nullptr.icu/index.php/archives/182/
+		// maps 中所有可执行内存，如果路径既不是以 / 开头，也不是 [vdso]，或者路径以 /dev/zero 开头，则认为存在注入
+		if ((flags & VM_EXEC)) {
 			name = "[vdso]";
 			goto done;
 		}
